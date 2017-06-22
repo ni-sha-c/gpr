@@ -14,29 +14,62 @@ void cov(double **x)
 }
 int main()
 {
+	
 	int ns = 100;
-	double **x = new double *[10];
-	double *y = new double [2];
-	for(int i = 0;i<10; i++)
-	{
-		x[i] = new double [2];
-	}
-	gpr(x,y,0.5,y);
-	/*std::ofstream xydata;
-  	xydata.open ("xydata.dat");
-    
-	std::default_random_engine generator;
-  	std::normal_distribution<double> distn(0.0,1.0);
-	std::uniform_real_distribution<double> distu(0.0,1.0);
-	for(int i=0; i<ns; i++)
-	{
-		x[i] = 8.0*distu(generator) - 4.0;
-		y[i] = g(x[i]) + 0.01*distn(generator);
-		xydata<<x[i]<<' '<<y[i]<<'\n'; 
+	double **x;
+	double *y;
+	double a,b;
+	int count;
+	int n_in = 0, m = 0;
+	//Assume data of the form
+	// x_i[0] x_i[1] ... x_i[m-1] y_i \newline, for 1 \leq i \leq n_in
+	// where n_in is the number of training points and m is the input dimension.
+	std::ifstream infile;
+	infile.open("xydata.dat");
 
+
+	
+	
+    std::string line;
+	char linei;
+   	bool alpha = true;
+
+    while (std::getline(infile, line))
+    {
+	    ++n_in;
+		if(n_in==1)
+			for(char c : line)
+				if (c==' ') 
+					++m;
+		
 	}
- 
-	xydata.close();
-	*/
+
+	infile.close();			
+	infile.clear();
+	infile.open("xydata.dat");
+		
+	
+    x = new double *[n_in];
+	y = new double [n_in];
+	
+	for(int i=0;i<n_in;i++)
+	{
+		x[i] = new double [m];	
+	}
+
+	//populate training data
+	 
+	for(int i=0;i<n_in;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			infile >> x[i][j];
+		}
+		infile >> y[i];
+	}
+
+	infile.close();		
+	gpr(x,y,1.0,y);
+		
 	return 0;
 }	
