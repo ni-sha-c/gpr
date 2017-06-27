@@ -5,7 +5,13 @@
 using namespace std;
 void gpr(double **x, double *y, double sigmasq, double *xtest)
 {
-	std::cout<<x[9][0];
+	int n_train, m;
+	std::cout<<sizeof(*x)<<'\n';	
+	//for(int i=0; i < n_train; i++)
+	//	for(int j=0; j < m; j++)
+	//		L[i][j] = K[i][j] + sigmasq;
+		
+
 
 }
 void cov(double **x)
